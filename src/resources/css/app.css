@@ -1,0 +1,189 @@
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap");
+@import "stickynote.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.carousel-container {
+    @apply w-full h-full flex overflow-x-auto relative;
+}
+
+.carousel-item {
+    @apply min-w-full min-h-full flex-col justify-center items-center hidden;
+}
+
+.carousel-item.active {
+    @apply rounded-2xl flex;
+}
+
+.controls {
+    @apply absolute w-full flex justify-between top-1/2;
+}
+button.disabled {
+    cursor: not-allowed;
+}
+
+[x-cloak] {
+    display: none;
+}
+.post-title {
+    @apply text-base font-medium text-gray-600 mb-3 overflow-ellipsis overflow-hidden;
+}
+.post-description {
+    @apply leading-relaxed mb-3 overflow-ellipsis overflow-hidden;
+}
+
+.line-clamp-3 {
+    display: -webkit-box;
+    line-clamp: 3;
+    -webkit-line-clamp: 3; /* number of lines to show */
+    -webkit-box-orient: vertical;
+}
+
+.line-clamp-2 {
+    display: -webkit-box;
+    line-clamp: 2;
+    -webkit-line-clamp: 2; /* number of lines to show */
+    -webkit-box-orient: vertical;
+}
+
+.line-clamp-1 {
+    display: -webkit-box;
+    line-clamp: 1;
+    -webkit-line-clamp: 1; /* number of lines to show */
+    -webkit-box-orient: vertical;
+}
+
+.input-datatable {
+    @apply font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none;
+}
+
+.input-form {
+    @apply block mt-1 w-full;
+}
+
+.input-checkbox-switch {
+    @apply toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer;
+}
+
+.select-form {
+    @apply rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50;
+}
+
+.title-button {
+    @apply bg-blue-semparar text-white hover:bg-blue-600;
+}
+
+.content {
+    @apply mx-auto w-full h-full flex flex-col items-center justify-center;
+}
+
+.actions {
+    @apply inline-flex w-full px-6 py-4 text-sm text-gray-500 border-b border-gray-200;
+}
+
+.button-blue {
+    @apply hover:bg-blue-semparar bg-blue-semparar;
+}
+
+.text-blue {
+    @apply text-blue-semparar hover:text-blue-600;
+}
+
+.text-red {
+    @apply text-red-semparar hover:text-red-600;
+}
+
+.text-green {
+    @apply text-green-semparar hover:text-green-600;
+}
+
+.button-blue {
+    @apply bg-blue-semparar hover:bg-blue-600 text-white;
+}
+
+.button-red {
+    @apply bg-red-semparar hover:bg-red-600 text-white;
+}
+
+.button-green {
+    @apply bg-green-semparar hover:bg-green-600 text-white;
+}
+
+.table-col {
+    @apply px-6 py-4 border-b border-gray-200;
+}
+
+.faq {
+    transition: all 0.3s ease-in-out;
+}
+
+.open {
+    @apply h-full;
+}
+
+.closed {
+    @apply h-0 hidden;
+}
+
+a::before {
+    transition: all 0.3s ease-in-out;
+}
+
+.dropdown-menu {
+    display: none;
+}
+
+.dropdown:hover > .dropdown-menu {
+    transition: all 0.3s ease-in-out;
+    display: block;
+    position: absolute;
+    left: 75%;
+    top: 0;
+    z-index: 100;
+    border-style: solid;
+    border-width: 1px;
+    border-image: linear-gradient(
+            90deg,
+            hsl(357, 82%, 27%, 0.3),
+            rgb(255, 255, 255, 0)
+        )
+        1;
+}
+.dropdown-menu:before {
+    position: absolute;
+    content: "";
+    background-image: linear-gradient(
+        45deg,
+        rgba(255, 255, 255, 0.959),
+        rgba(255, 255, 255, 0)
+    );
+    background-color: rgb(255, 255, 255);
+    width: 20px;
+    height: 20px;
+    left: -10px;
+    top: 5px;
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    z-index: -1;
+    box-shadow: -1px 1px 0px #7d0c12;
+}
+
+.toggle-checkbox:checked {
+    @apply right-0 border-green-400;
+    right: 0;
+    border-color: #68d391;
+}
+
+.toggle-checkbox:checked + .toggle-label {
+    @apply bg-green-400;
+    background-color: #68d391;
+}
+
+.th-table-quiz {
+    @apply px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50;
+}
