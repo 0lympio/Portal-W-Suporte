@@ -1,0 +1,41 @@
+version: '3.8'
+services:
+  web:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./src/:/var/www/html
+      - ./default.conf:/etc/nginx/conf.d/default.conf
+    links:
+      - php-fpm
+  php-fpm:
+    build:
+        context: ./
+    links:
+      - mysql
+    volumes:
+        - ./src/:/var/www/html
+    depends_on:
+        mysql:
+            condition: service_healthy
+  mysql:
+    #    platform: linux/amd64 #para rodar no Mac
+    container_name: mysql
+    image: mysql:latest
+    restart: always
+    cap_add:
+      - SYS_NICE
+    environment:
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_ROOT_PASSWORD=123
+      - MYSQL_DATABASE=imparaveis
+    volumes:
+      - imparaveis-data:/var/lib/mysql"
+    ports:
+        - "3307:3306"
+    healthcheck:
+        test: mysqladmin ping -h 127.0.0.1 -u root --password=123
+        interval: 10s
+volumes:
+  imparaveis-data:
