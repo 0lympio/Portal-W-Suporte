@@ -68,6 +68,8 @@ class UserController extends Controller
 
         $data = $request->all();
         $data['password'] = bcrypt($request->password);
+        $data['created_by'] = auth()->user()->id;
+
         $role = Role::where('id', $request->role)->first();
 
         $user = User::create($data);
@@ -154,7 +156,12 @@ class UserController extends Controller
      */
     public function changeStatus(Request $request, User $user): JsonResponse
     {
-        $user->fill(['status' => $request->status]);
+        $status = $request->get('status');
+
+        $user->fill([
+            'status' => $status,
+            'disabled_at' => $status ? null : now(),
+        ]);
 
         $user->save();
 

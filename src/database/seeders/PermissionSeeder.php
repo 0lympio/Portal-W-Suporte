@@ -70,5 +70,10 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'uploads.store']);
         Permission::create(['name' => 'users.export']);
         Permission::create(['name' => 'content.show']);
+
+        Permission::create(['name' => 'companies.index']);
+        Permission::create(['name' => 'companies.store']);
+        Permission::create(['name' => 'companies.edit']);
+        Permission::create(['name' => 'companies.destroy']);
     }
 }

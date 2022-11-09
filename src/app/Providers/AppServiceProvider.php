@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Http\Controllers\PostController;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\Slideshow;
@@ -71,8 +72,6 @@ class AppServiceProvider extends ServiceProvider
             } else {
                 session(['popup' => true]);
             }
-
-            $view->with('show', session()->get('popup'));
         });
 
         view()->composer('components.uploads.modal', function ($view) {

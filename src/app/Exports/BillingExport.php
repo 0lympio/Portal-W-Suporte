@@ -8,12 +8,19 @@ use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithCustomValueBinder;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
+use Maatwebsite\Excel\Concerns\WithMapping;
 use PhpOffice\PhpSpreadsheet\Cell\DefaultValueBinder;
 use PhpOffice\PhpSpreadsheet\Cell\Cell;
 use PhpOffice\PhpSpreadsheet\Cell\DataType;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
-class BillingExport extends DefaultValueBinder implements WithColumnFormatting, ShouldAutoSize, WithCustomValueBinder, FromCollection, WithHeadings
+class BillingExport extends DefaultValueBinder implements
+    WithColumnFormatting,
+    ShouldAutoSize,
+    WithCustomValueBinder,
+    FromCollection,
+    WithHeadings,
+    WithMapping
 {
     public function __construct(Collection $year)
     {
@@ -23,16 +30,29 @@ class BillingExport extends DefaultValueBinder implements WithColumnFormatting, 
     public function headings(): array
     {
         return [
-            'Nome',
-            'Usuários',
-            'Data',
+            'Assessoria',
+            'Mês',
+            'Ativos',
+            'Inativos',
+            'Total',
+        ];
+    }
+
+    public function map($invoice): array
+    {
+        return [
+            $invoice['company'],
+            $invoice['month'],
+            $invoice['active'],
+            $invoice['inactive'],
+            $invoice['total'],
         ];
     }
 
     public function columnFormats(): array
     {
         return [
-            'C' => NumberFormat::FORMAT_DATE_DDMMYYYY,
+            'B' => NumberFormat::FORMAT_DATE_DDMMYYYY,
         ];
     }
 

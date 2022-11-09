@@ -2,11 +2,11 @@
     <div x-data="dataTable({{ collect($data) }})" x-cloak>
         <div>
             <x-title>
-                <x-slot name="title">Relatório de login/logout</x-slot>
+                <x-slot name="title">Relatório de usuários</x-slot>
                 <x-slot name="buttons">
                     <div class="flex justify-end">
-                        <x-button @click="exportar()"
-                                  class="title-button"><i class="fa-solid fa-file-excel p-1"></i>Exportar
+                        <x-button @click="exportar()" class="title-button"><i
+                                class="fa-solid fa-file-excel p-1"></i>Exportar
                         </x-button>
                     </div>
                 </x-slot>
@@ -14,68 +14,52 @@
             <div class="content">
                 <x-datatable.table>
                     <thead class="border-b-2">
-                    <x-datatable.head width="20%" order="">Nome</x-datatable.head>
-                    <x-datatable.head width="20%" order="">Username</x-datatable.head>
-                    <x-datatable.head width="20%" order="">Assessoria</x-datatable.head>
-                    <x-datatable.head width="12%" order="">Último acesso</x-datatable.head>
-                    <x-datatable.head width="12%" order="">Entrada</x-datatable.head>
-                    <x-datatable.head width="12%" order="">Saída</x-datatable.head>
+                        <x-datatable.head width="20%" order="">Nome</x-datatable.head>
+                        <x-datatable.head width="20%" order="">Login</x-datatable.head>
+                        <x-datatable.head width="20%" order="">Status</x-datatable.head>
+                        <x-datatable.head width="12%" order="">Data de cadastro</x-datatable.head>
+                        <x-datatable.head width="12%" order="">Perfil</x-datatable.head>
+                        <x-datatable.head width="12%" order="">Assessoria</x-datatable.head>
                     </thead>
                     <tbody>
-                    <template x-for="(item, index) in items" :key="index">
-                        <tr class="hover:bg-gray-200 text-gray-900 text-sm"
-                            x-show="checkView(index + 1)">
-                            <td class="table-col">
-                                <span x-text="item.name"></span>
-                            </td>
-                            <td class="table-col">
-                                <span x-text="item.username"></span>
-                            </td>
-                            <td class="table-col">
-                                <span x-text="item.company"></span>
-                            </td>
-                            <td class="table-col">
-                                <span x-text="item.date"></span>
-                            </td>
-                            <td class="table-col">
-                                <span x-text="item.entry"></span>
-                            </td>
-                            <td class="table-col">
-                                <span x-text="item.exit"></span>
-                            </td>
-                        </tr>
-                    </template>
+                        <template x-for="(item, index) in items" :key="index">
+                            <tr class="hover:bg-gray-200 text-gray-900 text-sm" x-show="checkView(index + 1)">
+                                <td class="table-col">
+                                    <span x-text="item.name"></span>
+                                </td>
+                                <td class="table-col">
+                                    <span x-text="item.username"></span>
+                                </td>
+                                <td class="table-col">
+                                    <span x-text="item.status"></span>
+                                </td>
+                                <td class="table-col">
+                                    <span x-text="new Date(item.created_at).toLocaleString()"></span>
+                                </td>
+                                <td class="table-col">
+                                    <span x-text="item.profile"></span>
+                                </td>
+                                <td class="table-col">
+                                    <span x-text="item.company"></span>
+                                </td>
+                            </tr>
+                        </template>
                     </tbody>
                 </x-datatable.table>
             </div>
         </div>
+        <x-reports.filters.login :clickoutside="false" :companies="$companies" :roles="$roles"></x-reports.filters.login>
     </div>
 
     <script>
-        window.dataTable = function (data) {
+        window.dataTable = function(data) {
             return {
-                hasReportFilters: false,
-                modalAddQuiz: false,
-                deleteModal: false,
-                deleteUrl: '',
-                hasSearch: true,
-                availableFilters: [
-                    { name: 'last_7_days', text: 'Últimos 7 dias' },
-                    { name: 'users', text: 'Por usuário' },
-                    { name: 'companies', text: 'Por assessoria' },
-                    { name: 'specific_date', text: 'Por período' },
-                ],
+                hasReportFilters: true,
+                hasSearch: false,
+                filtersModal: false,
                 searchInput: '',
-                users: @json($users),
-                companies: @json($companies),
                 items: [],
                 view: 5,
-                filter: {
-                    type: '7',
-                    start: '7',
-                    end: 'today',
-                    element: 'all',
-                },
                 pages: [],
                 offset: 5,
                 pagination: {
@@ -90,6 +74,7 @@
 
                 initData() {
                     this.items = data;
+                    console.log(this.items)
                     this.showPages();
                 },
 
@@ -166,74 +151,67 @@
 
                 exportar() {
                     let url = `{{ route('reports.loginLogout.export') }}`;
+                    let params = this.getFilterParameters();
 
                     fetch(url, {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ data: this.items }),
-                    })
-                        .then((res) => { return res.blob(); })
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                ...params
+                            }),
+                        })
+                        .then((res) => {
+                            return res.blob();
+                        })
                         .then((data) => {
                             let link = document.createElement('a');
                             link.href = URL.createObjectURL(data);
-                            link.download = 'login_logout.xlsx';
+                            link.download = 'usuarios.xlsx';
                             link.click();
                         })
                         .catch(err => console.error(err));
                 },
 
                 changeFilter() {
-                    if (this.filter.type === 'last_7_days') {
-                        this.changeDateFilter();
-                    }
-                },
+                    let url = `{{ route('reports.loginLogout.filter') }}`;
+                    let params = this.getFilterParameters();
 
-                changeDateFilter() {
-                    let queryParams = {};
-
-                    if (this.filter.type !== 'last_7_days') {
-                        queryParams = { start: this.filter.start, end: this.filter.end };
-                    } else {
-                        queryParams = { start: 'last_7_days', end: 'now' };
-                    }
-
-                    let url = `{{ route('reports.loginLogout.filter') }}?` + new URLSearchParams(queryParams).toString();
-
-                    fetch(url)
+                    fetch(url, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                ...params
+                            }),
+                        })
                         .then(response => response.json())
-                        .then(response => {
-                            this.items = response.data;
-                            data = this.items;
+                        .then(data => {
+                            this.items = data;
+                            this.filtersModal = false;
                             this.changeView();
                         })
                         .catch(err => console.error(err));
                 },
 
-                changeUserFilter() {
-                    this.items = data;
+                getFilterParameters() {
+                    let company = document.querySelector(`[name='company']`).value;
+                    let status = document.querySelector(`[name='status']`).value;
+                    let profile = document.querySelector(`[name='profile']`).value;
+                    let startDate = document.querySelector(`[name='startDate']`).value;
+                    let endDate = document.querySelector(`[name='endDate']`).value;
 
-                    if (this.filter.element !== 'all') {
-                        this.items = this.items.filter(
-                            item => item.username === this.filter.element
-                        );
-                    }
-
-                    this.changeView();
-                },
-
-                changeCompanyFilter() {
-                    this.items = data;
-
-                    if (this.filter.element !== 'all') {
-                        this.items = this.items.filter(
-                            item => item.company === this.filter.element
-                        );
-                    }
-
-                    this.changeView();
+                    return params = {
+                        company,
+                        status,
+                        profile,
+                        startDate,
+                        endDate
+                    };
                 },
 
                 isEmpty() {

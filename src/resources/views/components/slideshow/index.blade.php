@@ -1,9 +1,9 @@
 <div class="overflow-x-hidden flex flex-col w-4/6 py-3 relative" x-data="carousel({{ collect($slides) }})" x-init="initSlide()" x-cloak
     id="carousel">
-    <div class="sliderAx h-full inset-0 flex">
+    <div class="h-full flex">
         <template x-for="(image, index) in images" :key="index">
             <div :id="$id('slider')" class="container mx-auto" :style="links[index] ? 'cursor: pointer' : ''">
-                <div class="bg-cover bg-center h-full text-white py-24 px-10 object-fill"
+                <div class="bg-[length:100%_100%] w-full h-full text-white py-24 px-10 object-fill"
                     :style="`background-image: url(${image})`" @click="(links[index] ? location.href=links[index] : '')">
                 </div>
             </div>
@@ -28,7 +28,7 @@
             }
         }
 
-        $(`#button-1`).removeClass("bg-gray-300");
+        $(`#button-1`).removeClass("bg-gra y-300");
         $(`#button-1`).addClass("bg-red-semparar");
     });
 

@@ -34,8 +34,8 @@ class BillingController extends Controller
     public function filter(Request $request)
     {
         $company = $request->get('company');
-        $startDate = new Carbon($request->get('startDate') . ' 00:00:00');
-        $endDate = new Carbon($request->get('endDate') . ' 23:59:59');
+        $startDate = (new Carbon($request->get('startDate')))->startOfMonth();
+        $endDate = (new Carbon($request->get('endDate')))->endOfMonth();
 
         $data = $this->getData($company, $startDate, $endDate);
 

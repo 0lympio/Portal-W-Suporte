@@ -35,7 +35,7 @@ class SlideshowController extends Controller
      */
     public function create(): View|Factory|Application
     {
-        $images = Upload::where('mimetype', 'like', 'image/%')->get();
+        $images = Upload::where('mimetype', 'like', 'image/%')->orderBy('created_at', 'desc')->get();
 
         return view('slideshow.create', compact('images'));
     }
@@ -66,7 +66,7 @@ class SlideshowController extends Controller
      */
     public function edit(Slideshow $slideshow): View|Factory|Application
     {
-        $images = Upload::where('mimetype', 'like', 'image/%')->get();
+        $images = Upload::where('mimetype', 'like', 'image/%')->orderBy('created_at', 'desc')->get();
         $slideshow->path = $slideshow->upload->path;
 
         return view('slideshow.edit', compact('slideshow', 'images'));
@@ -79,7 +79,13 @@ class SlideshowController extends Controller
      */
     public function update(Request $request, Slideshow $slideshow): RedirectResponse
     {
-        $slideshow->fill($request->all());
+        $data = $request->all();
+
+        if ($data['image']) {
+            $data['upload_id'] = Upload::where('path', $data['image'])->first()->id;
+        }
+
+        $slideshow->fill($data);
         $slideshow->save();
 
         return redirect()->route('slideshow.index')

@@ -21,7 +21,7 @@ services:
             condition: service_healthy
   mysql:
     #    platform: linux/amd64 #para rodar no Mac
-    container_name: mysql
+    container_name: mysql3
     image: mysql:latest
     restart: always
     cap_add:

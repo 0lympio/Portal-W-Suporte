@@ -1,31 +1,53 @@
-@props(['clickoutside', 'companies'])
+@props(['clickoutside', 'companies', 'roles'])
 
 <x-modal name="filtersModal" class="w-1/3 mb-24" :clickoutside="$clickoutside" x-data="filterValidation()" x-cloak>
     <x-slot name="title">Filtrar</x-slot>
     <div class="flex justify-center">
-        <div class="sm:max-w-md mb-3 py-4 sm:rounded-sm p-3 flex justify-center">
-            <form method="POST" action="{{ route('reports.billing.filter') }}">
+        <div class="sm:max-w-md mb-4 py-4 sm:rounded-sm p-3 flex justify-center">
+            <form method="POST" action="{{ route('reports.loginLogout.filter') }}">
                 @csrf
                 <div class="mt-4">
                     <x-label for="company" value="Assessoria" />
                     <select name="company" class="input-form select-form">
                         <option value="">Todas</option>
                         @foreach ($companies as $company)
-                            <option value="{{ $company->name }}">{{ $company->name }}</option>
+                            <option value="{{ $company->id }}">{{ $company->name }}</option>
                         @endforeach
                     </select>
                 </div>
 
                 <div class="grid grid-cols-2 gap-4">
                     <div class="mt-4">
+                        <x-label for="status" value="Status" />
+                        <select name="status" class="input-form select-form">
+                            <option value="">Status</option>
+                            <option value="1">Ativos</option>
+                            <option value="0">inativos</option>
+                        </select>
+                    </div>
+
+                    <div class="mt-4">
+                        <x-label for="profile" value="Tipo de perfil:" />
+                        <select name="profile" class="input-form select-form">
+                            <option value="">Qualquer</option>
+                            @foreach ($roles as $role)
+                                <option value="{{ $role->id }}">{{ $role->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="mt-4">
                         <x-label for="startDate" value="Data inicial" />
-                        <x-input class="input-form py-1" type="month" name="startDate"
+                        <x-input class="input-form py-1" type="date" name="startDate"
                             @change="setMinimumDateInEndValue()" />
                     </div>
 
                     <div class="mt-4">
                         <x-label for="endDate" value="Data final" />
-                        <x-input class="input-form py-1" type="month" name="endDate"
+                        <x-input class="input-form py-1" type="date" name="endDate"
                             @change="setMaximumDateAtInitialValue()" />
                     </div>
                 </div>
@@ -50,7 +72,7 @@
 
                 invalidDate() {
                     let endDate = document.querySelector(`[name='endDate']`).value;
-                    let startDate = document.querySelector(`[name='startDate']`).value
+                    let startDate = document.querySelector(`[name='startDate']`).value;
 
                     this.buttonDisabled = endDate === '' || startDate === '';
                 },

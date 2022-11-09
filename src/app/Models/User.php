@@ -31,6 +31,8 @@ class User extends Authenticatable
         'company_id',
         'position',
         'segment',
+        'disabled_at',
+        'created_by',
     ];
 
     /**

@@ -317,4 +317,22 @@ class PostController extends Controller
 
         return response()->json(['success' => 'Status changed successfully']);
     }
+
+    public static function hasPopup(): JsonResponse
+    {
+        $userId = auth()->user()->id;
+        $popups = DB::select(
+            "select * from posts p
+            where
+                p.popup = 1 and
+                p.status_id = 1 and
+                p.deleted_at is null and
+                p.id not in (
+                    select pv.post_id from post_views pv
+                    where pv.user_id = {$userId}
+                )"
+        );
+
+        return response()->json($popups);
+    }
 }

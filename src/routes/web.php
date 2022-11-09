@@ -8,13 +8,13 @@ use App\Http\Controllers\SlideshowController;
 use App\Http\Controllers\UploadController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ApprovalController;
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ContentController;
 use App\Http\Controllers\PostCommentController;
 use App\Http\Controllers\QuestionnaireController;
 use App\Http\Controllers\QuestionnaireViewController;
 use App\Http\Controllers\Reports\LoginLogoutController;
 use App\Http\Controllers\Reports\BillingController;
-use App\Http\Controllers\Reports\UsersReportController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Reports\PostsReportController;
 use App\Http\Controllers\Reports\QuestionnaireReportController;
@@ -47,6 +47,7 @@ Route::group(['middleware' => ['auth', 'session']], function () {
         Route::put('/{post}', [PostController::class, 'update'])->name('update');
         Route::post('/', [PostController::class, 'store'])->name('store');
         Route::delete('/{post}', [PostController::class, 'destroy'])->name('delete');
+        Route::get('/hasPopup', [PostController::class, 'hasPopup'])->name('hasPopup');
         Route::get('/{slug}/{read?}', [PostController::class, 'show'])->name('show');
 
         Route::post('/{post}/read', [PostController::class, 'markAsRead'])->name('read');
@@ -119,15 +120,12 @@ Route::group(['middleware' => ['auth', 'session']], function () {
 
     Route::name('reports.')->prefix('reports')->group(function () {
         Route::get('/login-logout', [LoginLogoutController::class, 'index'])->name('loginLogout.index');
-        Route::get('/login-logout/filter', [LoginLogoutController::class, 'filter'])->name('loginLogout.filter');
+        Route::post('/login-logout/filter', [LoginLogoutController::class, 'filter'])->name('loginLogout.filter');
         Route::post('/login-logout/export', [LoginLogoutController::class, 'export'])->name('loginLogout.export');
 
         Route::get('/billing', [BillingController::class, 'index'])->name('billing.index');
         Route::post('/billing/export', [BillingController::class, 'export'])->name('billing.export');
         Route::post('/billing/filter', [BillingController::class, 'filter'])->name('billing.filter');
-
-        Route::get('/users', [UsersReportController::class, 'index'])->name('users.index');
-        Route::post('/users/export', [UsersReportController::class, 'export'])->name('users.export');
 
         Route::get('/posts', [PostsReportController::class, 'index'])->name('posts.index');
         Route::post('/posts/export', [PostsReportController::class, 'export'])->name('posts.export');
@@ -157,6 +155,13 @@ Route::group(['middleware' => ['auth', 'session']], function () {
     Route::name('home.')->prefix('home')->group(function () {
         Route::get('/edit', [ContentController::class, 'homeEdit'])->name('edit');
         Route::post('/store', [ContentController::class, 'homeStore'])->name('store');
+    });
+
+    Route::name('companies.')->prefix('companies')->group(function () {
+        Route::get('/', [CompanyController::class, 'index'])->name('index');
+        Route::post('/store', [CompanyController::class, 'store'])->name('store');
+        Route::put('/{company}', [CompanyController::class, 'update'])->name('update');
+        Route::delete('/{company}', [CompanyController::class, 'destroy'])->name('destroy');
     });
 
     // Tem que ser sempre a última rota, porque ela é generica

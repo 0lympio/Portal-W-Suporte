@@ -33,9 +33,7 @@
         <div class="p-6 shadow-inner w-full">
             {{ $slot }}
 
-            @if (sizeof($popups) > 0 AND $show)
-                <x-popups></x-popups>
-            @endif
+            <x-popups></x-popups>
         </div>
     </div>
 

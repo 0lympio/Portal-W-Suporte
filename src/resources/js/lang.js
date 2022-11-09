@@ -41,6 +41,7 @@ let messages = {
         approvals: "aprovações",
         approver: "aprovar",
         rejected: "reprovar",
+        companies: "Assessorias",
     },
 };
 

@@ -23,8 +23,9 @@
                                 @endif
                             </span>
                         </x-nav-link>
-                        <x-nav-dropdown :category_children="$menu->children->where('status', '1')->sortBy('name', SORT_NATURAL|SORT_FLAG_CASE)"
-                            :posts="$menu->posts->where('status_id', '1')->sortBy('title', SORT_NATURAL|SORT_FLAG_CASE)" />
+                        <x-nav-dropdown :category_children="$menu->children->where('status', '1')->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)" :posts="$menu->posts
+                            ->where('status_id', '1')
+                            ->sortBy('title', SORT_NATURAL | SORT_FLAG_CASE)" />
                     </li>
                 @endforeach
                 @canany(['categories.index', 'posts.index', 'roles.index', 'questionnaires.index', 'slideshow.index',
@@ -91,6 +92,13 @@
                                     </x-nav-link>
                                 </li>
                             @endcan
+                            @can('companies.index')
+                                <li class="dropdown relative">
+                                    <x-nav-link href="{{ route('companies.index') }}" class="p-2 hover:text-red-semparar">
+                                        Assessorias
+                                    </x-nav-link>
+                                </li>
+                            @endcan
 
                             {{-- @can('reports.index') --}}
                             <li class="dropdown relative w-44">
@@ -100,15 +108,11 @@
                                 <ul class="dropdown-menu ml-4 bg-white text-gray-semparar z-50 shadow-md">
                                     <li class="dropdown relative w-44">
                                         <x-nav-link href="{{ route('reports.loginLogout.index') }}"
-                                            class="p-2 hover:text-red-semparar ">Login/Logout</x-nav-link>
+                                            class="p-2 hover:text-red-semparar ">Usuários</x-nav-link>
                                     </li>
                                     <li class="dropdown relative w-44">
                                         <x-nav-link href="{{ route('reports.posts.index') }}"
                                             class="p-2 hover:text-red-semparar ">Postagens</x-nav-link>
-                                    </li>
-                                    <li class="dropdown relative w-44">
-                                        <x-nav-link href="{{ route('reports.users.index') }}"
-                                            class="p-2 hover:text-red-semparar ">Usuários-ativos</x-nav-link>
                                     </li>
                                     <li class="dropdown relative w-44">
                                         <x-nav-link href="{{ route('reports.billing.index') }}"

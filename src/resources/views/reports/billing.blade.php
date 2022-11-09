@@ -28,7 +28,7 @@
                                     <span x-text="item.company"></span>
                                 </td>
                                 <td class="table-col">
-                                    <span x-text="new Date(item.month).toLocaleString()"></span>
+                                    <span x-text="new Date(item.month).toLocaleString().substring(3, 10)"></span>
                                 </td>
                                 <td class="table-col">
                                     <span x-text="item.active"></span>

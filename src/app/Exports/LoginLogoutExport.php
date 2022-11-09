@@ -13,7 +13,12 @@ use PhpOffice\PhpSpreadsheet\Cell\Cell;
 use PhpOffice\PhpSpreadsheet\Cell\DataType;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
-class LoginLogoutExport extends DefaultValueBinder implements WithColumnFormatting, ShouldAutoSize, WithCustomValueBinder, FromCollection, WithHeadings
+class LoginLogoutExport extends DefaultValueBinder implements
+    WithColumnFormatting,
+    ShouldAutoSize,
+    WithCustomValueBinder,
+    FromCollection,
+    WithHeadings
 {
     public function __construct(Collection $year)
     {
@@ -24,18 +29,26 @@ class LoginLogoutExport extends DefaultValueBinder implements WithColumnFormatti
     {
         return [
             'Nome',
-            'Usuário',
+            'Login',
+            'Status',
+            'Data de cadastro',
+            'Data de Inativação',
+            'Perfil',
             'Assessoria',
             'Data',
             'Login',
             'Logout',
+            'Total de tempo logado',
+            'Dias logados',
+            'Responsável pelo cadastro',
         ];
     }
 
     public function columnFormats(): array
     {
         return [
-            'C' => NumberFormat::FORMAT_DATE_DDMMYYYY,
+            // 'D' => NumberFormat::FORMAT_DATE_DDMMYYYY,
+            // 'E' => NumberFormat::FORMAT_DATE_DDMMYYYY,
         ];
     }
 

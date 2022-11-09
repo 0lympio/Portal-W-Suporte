@@ -28,7 +28,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('disabled:post')->everyMinute()->runInBackground();
         $schedule->command('disabled:questionnaires')->everyMinute()->runInBackground();
         $schedule->command('disabled:slideshow')->everyMinute()->runInBackground();
-        $schedule->command('report:billing')->monthlyOn(1, '00:01')->runInBackground();
+        $schedule->command('report:billing')->monthly()->runInBackground()->withoutOverlapping();
         // $schedule->command('publised:cron')->everyMinute()->runInBackground();
     }
 
