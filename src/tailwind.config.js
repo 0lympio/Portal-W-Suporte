@@ -19,11 +19,11 @@ module.exports = {
         },
         extend: {
             colors: {
-                'red-semparar': '#7d0c12',
-                'gray-semparar': '#505050',
+                'red-semparar': '#0F6F9E',
+                'gray-semparar': '#4D4B4B',
                 'lightgray-semparar': '#edeff0',
                 'green-semparar': '#9d963a',
-                'blue-semparar': '#406979',
+                'blue-semparar': '#0F6F9E',
             },
             fontFamily: {
                 sans: ['Ubuntu', ...defaultTheme.fontFamily.sans],

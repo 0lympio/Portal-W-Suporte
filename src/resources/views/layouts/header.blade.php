@@ -4,7 +4,7 @@
             <div class="flex items-center justify-between">
                 <div class="flex items-center justify-start">
                     <a href="{{ route('content.home') }}" class="flex items-center text-xl font-bold w-64">
-                        <img src="{{ asset('images/logo-imparaveis.png') }}">
+                        <img src="{{ asset('images/logo W horiz.png') }}">
                     </a>
                     {{-- <div class="hidden mr-6 lg:block"> --}}
                     {{-- <form action="#"> --}}
@@ -17,22 +17,6 @@
                 </div>
                 <div class="flex items-center">
                     <!-- Icones do cabeçalho -->
-                    <div class="flex px-8 text-2xl justify-end text-gray-500">
-                        @can('uploads.store')
-                            <button class="ml-6" @click="uploadFileModal = true;" title="Biblioteca"
-                                data-toggle="tooltip">
-                                <i class="fa-solid fa-photo-film"></i>
-                            </button>
-                        @endcan
-                        <button class="ml-6" @click="openCalculator = ! openCalculator" title="Calculadora"
-                            data-toggle="tooltip" data-placement="bottom">
-                            <i class="fa-solid fa-calculator"></i>
-                        </button>
-                        <button class="ml-6 widget-button-add" title="Post it" data-toggle="tooltip"
-                            data-placement="bottom">
-                            <i class="fa-solid fa-note-sticky"></i>
-                        </button>
-                    </div>
                     <div class="flex w-full">
                         <x-dropdown align="right" width="100%">
                             <x-slot name="trigger">

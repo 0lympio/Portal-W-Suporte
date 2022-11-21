@@ -1,7 +1,7 @@
 <x-guest-layout>
     <x-auth-card>
         <x-slot name="logo">
-            <img src="{{ asset('images/logo-imparaveis.png') }}" alt="Logo imparáveis">
+            <img src="{{ asset('images/logo123.png') }}" alt="Logo W">
         </x-slot>
         <!-- Session Status -->
         <x-auth-session-status class="mb-4" :status="session('status')" />
@@ -39,14 +39,14 @@
             <div class="flex justify-between mt-4">
                 <x-label for="remember_me" class="inline-flex items-center">
                     <x-input id="remember_me" type="checkbox"
-                        class="rounded border-gray-300 text-indigo-100 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                        class="rounded border-gray-600 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                         name="remember" />
-                    <span class="ml-2 text-sm text-gray-600">{{ __('Lembrar-me') }}</span>
+                    <span class="ml-2 text-sm text-blue-800">{{ __('Lembrar-me') }}</span>
                 </x-label>
-                <a href="#" class="text-red-semparar" onclick="handleModal(true)">Esqueci minha senha</a>
+                <a href="#" class="text-blue-800" onclick="handleModal(true)">Esqueci minha senha</a>
             </div>
             <div class="flex items-center justify-center mt-4">
-                <x-button class="ml-4 button-red">
+                <x-button class="ml-2 button-blue">
                     {{ __('Acessar') }}
                 </x-button>
             </div>
@@ -64,21 +64,20 @@
                     <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                         <div class="sm:flex sm:items-start">
                             <div
-                                class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                                class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10">
                             </div>
                             <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                                <h3 class="text-lg font-medium leading-6 text-gray-900" id="modal-title">Contate seu
-                                    supervisor</h3>
+                                <h3 class="text-lg font-medium leading-6 text-gray-900" id="modal-title">Contate um administrador</h3>
                                 <div class="mt-2">
                                     <p class="text-sm text-gray-500">Para ter acesso ao portal novamente, solicite uma
-                                        nova senha de acesso ao seu supervisor</p>
+                                        nova senha de acesso ao administrador.</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                         <button type="button"
-                            class="inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+                            class="inline-flex w-full justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
                             onclick="handleModal(false)">Ok</button>
                     </div>
                 </div>
